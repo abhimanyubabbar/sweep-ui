@@ -1,2 +1,3 @@
 # sweep-ui
-Interface for decentralized search sweep.
+Front end for the decentralized search application.
+
