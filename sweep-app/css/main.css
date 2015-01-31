@@ -1,0 +1,12 @@
+
+.form-outline{
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.wrapper{
+    margin: 0 auto;
+    width: 600px;
+    padding-top: 50px;
+}
