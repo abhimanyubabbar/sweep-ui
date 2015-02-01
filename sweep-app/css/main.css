@@ -32,3 +32,24 @@
     
  font-size: 20px;
 }
+
+/* =======  SEARCH CONTROLS ===== */
+
+
+.search-input-wrapper{
+    
+    margin: 0 auto;
+    padding: 10px;
+    background: lightgray;
+    width: 600px;
+}
+
+
+.search-result-wrapper{
+    
+    position: relative;
+    padding: 20px;
+    top: 100px;
+    background: yellow;
+    
+}
