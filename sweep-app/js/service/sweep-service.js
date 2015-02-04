@@ -6,7 +6,7 @@
 // === SWEEP WEBSERVICE === //
 
 angular.module('sweepMain')
-    .service('sweepService',['$log','$http',function($log,$http){
+    .service(' ',['$log','$http',function($log,$http){
 
         
         // Default Objects.
