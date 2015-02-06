@@ -1,4 +1,45 @@
 
+/* === MAIN PAGE STYLING === */
+
+
+
+.css-animation{
+    width: 700px;
+    border: 2px solid black;
+    text-align: center;
+    margin: 0 auto;
+
+    -webkit-animation-name:first-animation;
+    -webkit-animation-duration: 4s;
+    
+    animation-name: first-animation;
+    animation-duration: 5s;
+}
+
+
+
+@-webkit-keyframes first-animation{
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    1% {
+        display: block;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes first-animation{
+    0%{
+        display: none;
+    }
+    100%{
+        display: inline;
+    }
+}
+
 .form-outline{
     padding: 10px;
 }
