@@ -6,7 +6,7 @@
 // === GVOD - WEBSERVICE === //
 // Core Service Module.
 
-angular.module("sweepMain",[])
+angular.module("sweepMain")
 
     .service("gvodService",['$log','$http',function($log,$http){
 

@@ -2,6 +2,35 @@
  * Created by babbarshaer on 2015-01-31.
  */
 
+angular.module('sweepMain',['ngRoute'])
+    
+    .config(['$routeProvider','$locationProvider', function($routeProvider,$locationProvider){
+        
+        $routeProvider.
+            
+            when('/', 
+            {templateUrl: 'partials/main/welcome-partial.html'
+            }).
+            when('/search',
+            {
+                templateUrl:'partials/search/Search.html',
+                controller: 'SearchController'
+                
+            }).
+            when('/upload',
+            {
+                templateUrl: 'partials/uploader/IndexUpload.html',
+                controller: 'UploaderController'
+            }).
+            otherwise({
+                redirectTo: '/'
+            });
 
 
-angular.module('sweepMain',[]);
+//        $locationProvider.html5Mode({
+//            enabled: true,
+//            requireBase: false
+//        });
+//        $locationProvider.hashPrefix('!');
+        
+    }]);
