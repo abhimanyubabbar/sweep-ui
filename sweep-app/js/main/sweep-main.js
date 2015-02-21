@@ -13,13 +13,13 @@ angular.module('sweepMain',['ngRoute'])
             }).
             when('/search',
             {
-                templateUrl:'partials/search/Search.html',
+                templateUrl:'partials/search/search.html',
                 controller: 'SearchController'
                 
             }).
             when('/upload',
             {
-                templateUrl: 'partials/uploader/IndexUpload.html',
+                templateUrl: 'partials/uploader/indexUpload.html',
                 controller: 'UploaderController'
             }).
             otherwise({

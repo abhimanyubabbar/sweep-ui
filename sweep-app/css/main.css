@@ -88,9 +88,9 @@
 
 .search-result-wrapper{
     
-    position: relative;
+    /*position: relative;*/
     padding: 20px;
-    top: 100px;
+    /*top: 100px;*/
     background: yellow;
-    
+    margin-top: 100px;
 }
