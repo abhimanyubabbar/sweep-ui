@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Video Js Html Player</title>
+    <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css"/>
+</head>
+
+<body ng-controller="VideoJsController" style="padding-top: 50px">
+
+
+<div class="container">
+    
+    <div class="row">
+        
+        <div class="col-sm-6 col-sm-offset-3" style="height: 300px">
+            <video id="main_player" class="video-js vjs-default-skin">
+            </video>
+        </div>
+        
+    </div>
+
+    <hr/>
+    
+    <div class="row">
+        
+        <div class="col-sm-6 col-sm-offset-3" style="margin-top: 30px">
+            
+            <form name="dynamicLinkForm" ng-submit="updateAndPlay()" novalidate class="well">
+
+                <div class="form-group">
+                    <label> File Name: </label>
+                    <input type="text" class="form-control" required ng-model="linkForm.name"/>
+                </div>
+
+                <div class="form-group">
+                    <label> Port </label>
+                    <input type="text" class="form-control" required ng-model="linkForm.port"/>
+                </div>
+
+
+                <div class="form-group">
+                    <label> Link Generated</label>
+                    <input type="text" class="form-control" disabled ng-model="linkForm.linkGenerated">
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-success">Update & Play</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    
+    
+</div>
+
+
+</div>
+
+<script src="http://vjs.zencdn.net/4.12/video.js"></script>
+<script src="../../components/angular/angular.min.js"></script>
+<script src="../../components/jquery/jquery.min.js"></script>
+<script src="../../components/bootstrap/bootstrap.js"></script>
+<script src="../../js/video/main.js"></script>
+
+</body>
+</html>
