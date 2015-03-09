@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sweep</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="BoardHeaderController">
+
+    <div class="container">
+        <a href="/" class="navbar-brand">Sweep</a>
+
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Login</a></li>
+            <li><a href ng-click="routeTo('/upload-landing')">Upload</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </div>
+    
+</div>
+
+<!-- Div for view replacement. -->
+<div id="viewReplaceDiv" ng-view></div>
+
+
+<script src="components/angular/angular.js"></script>
+<script src="components/angular-route/angular-route.js"></script>
+<script src="components/jquery/jquery.min.js"></script>
+<script src="components/bootstrap/bootstrap.js"></script>
+<script src="js/main/app.js"></script>
+<script src="js/controller/BoardHeaderController.js"></script>
+<script src="js/controller/LandingController.js"></script>
+<script src="js/uploader/UploadController.js"></script>
+<script src="js/service/common-service.js"></script>
+</body>
+</html>

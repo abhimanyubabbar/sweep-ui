@@ -1,11 +1,15 @@
 'use strict';
 
-angular.module('sweepMain')
+angular.module('app')
 
-    .controller('BoardHeaderController', ['$log', '$scope', function ($log, $scope) {
-        
+    .controller('BoardHeaderController', ['$log', '$scope','common', function ($log, $scope, common) {
+
         function _initScope(scope) {
-            $log.debug('Board Header Controller Initialized.');
+            
+            $log.info('Board Header Controller Initialized.');
+            scope.routeTo = function(path){
+                common.routeTo(path);
+            }
         }
         
         _initScope($scope);

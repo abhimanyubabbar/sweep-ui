@@ -1,83 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Index Upload Main</title>
-    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css"/>
-    <link rel="stylesheet" href="../../css/main_test.css"/>
-</head>
-<body>
+<div>
+    <div class="container">
+        <div class="row">
 
+            <div class="col-sm-4">
 
-<div class="container">
-    <div class="row">
-        
-        <div class="col-sm-4">
-
-            <div class="panel panel-info">
-                <div class="panel-heading">Waiting Upload</div>
-                <div class="panel-body">
-                    Basic panel example
+                <div class="panel panel-info">
+                    <div class="panel-heading">Waiting Upload</div>
+                    <div class="panel-body">
+                        Basic panel example
+                    </div>
                 </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Processing</div>
+                    <div class="panel-body">
+                        Currently Processing
+                    </div>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">Uploaded</div>
+                    <div class="panel-body">
+                        Successfully Uploaded
+                    </div>
+                </div>
+
             </div>
 
-            <div class="panel panel-warning">
-                <div class="panel-heading">Processing</div>
-                <div class="panel-body">
-                    Currently Processing
-                </div>
-            </div>
+            <div class="col-sm-6">
 
-            <div class="panel panel-success">
-                <div class="panel-heading">Uploaded</div>
-                <div class="panel-body">
-                    Successfully Uploaded
-                </div>
-            </div>
+                <form class="well">
 
+                    <div class="form-group">
+
+                        <label class="control-label" for="filename">FileName</label>
+                        <input type="text" id="filename" class="form-control" placeholder="File Name ... ">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label" for="category">Category</label>
+
+                        <select class="form-control" id="category">
+                            <option value="Video">Video</option>
+                            <option value="Audio">Audio</option>
+                            <option value="Books">Books</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="desc">Description</label>
+                        <textarea id="desc" class="form-control" rows="20" placeholder="Description"></textarea>
+                    </div>
+
+                    <div class="form-group text-right">
+                        <button class="btn btn-primary">Refresh</button>
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
-        
-        <div class="col-sm-6">
-            
-            <form class="well">
-                
-                <div class="form-group">
-                    
-                    <label class="control-label" for="filename">FileName</label>
-                    <input type="text" id="filename" class="form-control" placeholder="File Name ... ">
-                    
-                </div>
-
-                <div class="form-group">
-                    
-                    <label class="control-label" for="category">Category</label>
-                    
-                    <select class="form-control" id="category">
-                        <option value = "Video">Video</option>
-                        <option value = "Audio">Audio</option>
-                        <option value = "Books">Books</option>
-                    </select>
-                    
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" for="desc">Description</label>
-                    <textarea id="desc" class="form-control" rows="20" placeholder="Description"></textarea>
-                </div>
-                
-                <div class="form-group text-right">
-                    <button class="btn btn-primary">Refresh</button>
-                    <button class="btn btn-success">Submit</button>
-                </div>
-                
-            </form>
-            
-        </div>
-        
     </div>
 </div>
-
-<script src="../../components/jquery/jquery.min.js"></script>
-<script src="../../components/bootstrap/bootstrap.js"></script>
-</body>
-</html>
