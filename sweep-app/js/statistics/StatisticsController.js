@@ -1,6 +1,6 @@
-var app = angular.module('plunker', ['nvd3']);
 
-app.controller('MainCtrl', function($scope) {
+angular.module('app').
+    controller('StatisticsController', function($scope) {
     $scope.options = {
         chart: {
             type: 'scatterChart',

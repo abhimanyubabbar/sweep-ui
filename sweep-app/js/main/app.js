@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('app', ['ngRoute'])
+angular.module('app', [
+    'ngRoute',
+    'nvd3'
+    ])
     .config(['$routeProvider', function($routeProvider){
 
         $routeProvider
@@ -25,5 +28,9 @@ angular.module('app', ['ngRoute'])
             {
                 templateUrl: 'partials/uploader/upload-main.html',
                 controller: 'UploadController'
+            })
+            .when('/statistics',{
+                templateUrl: 'partials/statistics/basicScatterPlot.html',
+                controller: 'StatisticsController'
             })
     }]);

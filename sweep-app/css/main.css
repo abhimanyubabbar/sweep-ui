@@ -99,6 +99,7 @@
 
 body{
     padding-top: 70px;
+    font-family: 'Dosis', sans-serif;
 }
 
 
@@ -135,3 +136,6 @@ div .search-image h1{
 }
 
 
+.specialFont{
+    font-family: 'Lobster', cursive;
+}
