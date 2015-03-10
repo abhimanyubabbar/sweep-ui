@@ -15,8 +15,18 @@
 <div class="navbar navbar-default navbar-fixed-top" ng-controller="BoardHeaderController">
 
     <div class="container">
+        
         <a href="/" class="navbar-brand specialFont">Sweep</a>
-
+        <ul class="nav navbar-nav navbar-left">
+            <li class="dropdown">
+                <a href class="dropdown-toggle" data-toggle="dropdown" role="button">File<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href click-directive>Load</a></li>
+                    <li><input type="file" id="fileUploader" style= "display: none" file-uploader></li>
+                </ul>
+            </li>
+        </ul>
+        
         <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
@@ -34,6 +44,7 @@
                 </ul>
             </li>
         </ul>
+        
     </div>
     
 </div>
@@ -42,9 +53,9 @@
 <div id="viewReplaceDiv" ng-view></div>
 
 
+<script src="components/jquery/jquery.min.js"></script>
 <script src="components/angular/angular.js"></script>
 <script src="components/angular-route/angular-route.js"></script>
-<script src="components/jquery/jquery.min.js"></script>
 <script src="components/bootstrap/bootstrap.js"></script>
 <script src="https://rawgit.com/mbostock/d3/master/d3.min.js"></script>
 <script src="https://rawgit.com/novus/nvd3/v1.1.15-beta/nv.d3.min.js"></script>
