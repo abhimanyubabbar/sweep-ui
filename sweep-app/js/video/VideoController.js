@@ -49,7 +49,7 @@ angular.module('app')
                 if($scope.player != null){
                     
                     $scope.player.pause();
-                    $scope.player.src($scope.linkForm.linkGenerated);
+                    $scope.player.src({src: $scope.linkForm.linkGenerated, type: "video/mp4"});
                     $scope.player.load();
                     $scope.player.play();
                     
