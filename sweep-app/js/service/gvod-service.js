@@ -6,11 +6,12 @@
 // === GVOD - WEBSERVICE === //
 // Core Service Module.
 
-angular.module("sweepMain")
+angular.module("app")
 
     .service("gvodService",['$log','$http',function($log,$http){
 
-        var _defaultHost = "http://localhost:8100";
+        var _defaultHost = "http://localhost:";
+        var _defaultPort = "8100";
         var _defaultContentType = "application/json";
 
         // Get a promise object.
@@ -30,7 +31,7 @@ angular.module("sweepMain")
             play : function(json){
 
                 var method = "PUT";
-                var url = _defaultHost.concat("/play");
+                var url = _defaultHost.concat(_defaultPort).concat("/play");
 
                 return _getPromiseObject(method,url,_defaultContentType,json);
             },
@@ -39,7 +40,7 @@ angular.module("sweepMain")
             download : function(json){
 
                 var method = "PUT";
-                var url = _defaultHost.concat("/downloadvideo");
+                var url = _defaultHost.concat(_defaultPort).concat("/downloadvideo");
 
                 return _getPromiseObject(method,url,_defaultContentType,json);
             },
@@ -48,7 +49,7 @@ angular.module("sweepMain")
             fetchFiles : function(){
 
                 var method = "GET";
-                var url = _defaultHost.concat("/files");
+                var url = _defaultHost.concat(_defaultPort).concat("/files");
 
                 return _getPromiseObject(method,url,_defaultContentType);
             },
@@ -57,7 +58,7 @@ angular.module("sweepMain")
             pendingUpload : function(json){
 
                 var method = 'PUT';
-                var url = _defaultHost.concat("/pendinguploadvideo");
+                var url = _defaultHost.concat(_defaultPort).concat("/pendinguploadvideo");
 
                 return _getPromiseObject(method, url, _defaultContentType, json);
 
@@ -66,7 +67,7 @@ angular.module("sweepMain")
             upload : function(json){
 
                 var method = 'PUT';
-                var url = _defaultHost.concat("/uploadvideo");
+                var url = _defaultHost.concat(_defaultPort).concat("/uploadvideo");
 
                 return _getPromiseObject(method, url, _defaultContentType, json);
             },
@@ -74,9 +75,17 @@ angular.module("sweepMain")
             stop : function(json){
 
                 var method = 'PUT';
-                var url = _defaultHost.concat("/stop");
+                var url = _defaultHost.concat(_defaultPort).concat("/stop");
 
                 return _getPromiseObject(method, url, _defaultContentType, json);
+            },
+            
+            playPos : function(json, port){
+                
+                var method = 'PUT';
+                var url = _defaultHost.concat(port || _defaultPort).concat("/playPos");
+                
+                return _getPromiseObject(method, url, _defaultContentType,json);
             }
 
 

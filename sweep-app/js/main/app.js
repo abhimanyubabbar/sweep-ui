@@ -33,4 +33,8 @@ angular.module('app', [
                 templateUrl: 'partials/statistics/basicScatterPlot.html',
                 controller: 'StatisticsController'
             })
+            .when('/video',{
+                templateUrl: 'partials/video/video-js.html',
+                controller: 'VideoController'
+            })
     }]);

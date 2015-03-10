@@ -1,7 +1,7 @@
 'use strict';
-angular.module('myApp', [])
+angular.module('app')
     
-    .controller('VideoJsController', ['$scope', '$log', function($scope,$log){
+    .controller('VideoController', ['$scope', '$log','gvodService', function($scope,$log,gvodService){
         
         var precedingText = "http://localhost:";
         
@@ -16,11 +16,20 @@ angular.module('myApp', [])
             scope.player.on('timeupdate', function(data){
 //                $log.info("Time Update Received.");
 //                $log.info(scope.player.bufferedPercent()+ " end: " + angular.toJson(scope.player.buffered().end(0))) ;
+                $log.info(scope.player.currentTime());
+                
+                var playPos ={
+                    overlayId: 0,
+                    videoName: scope.linkForm.name,
+                    playPos: scope.player.currentTime()
+                };
+                gvodService.playPos(playPos, parseInt(scope.linkForm.port+1));
             });
             
             scope.player.on('seeking', function(data){
                $log.info("Seeking Player...");
                 $log.info(data);
+                $log.info(scope.player.currentTime());
             });
             
             scope.linkForm = {
