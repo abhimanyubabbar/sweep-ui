@@ -37,4 +37,5 @@ angular.module('app', [
                 templateUrl: 'partials/video/video-js.html',
                 controller: 'VideoController'
             })
+            .otherwise({redirectTo: '/'})
     }]);
