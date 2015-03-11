@@ -8,12 +8,20 @@
 
 angular.module("app")
 
-    .service("gvodService",['$log','$http',function($log,$http){
+    .service("gvodService",['$log','$http','$rootScope',function($log, $http, $rootScope){
 
         var _defaultHost = "http://localhost:";
         var _defaultPort = "8100";
+        var _serverName = "localhost";
         var _defaultContentType = "application/json";
 
+        
+        var server = {
+            host: _defaultHost,
+            port: _defaultPort,
+            name: _serverName
+        };
+        
         // Get a promise object.
         function _getPromiseObject (method,url,contentType,data){
 
@@ -26,6 +34,16 @@ angular.module("app")
         }
 
         return {
+
+            setServer : function(data){
+                $log.info("Set Server Command Called");
+                server = data;
+                $rootScope.$broadcast('server:updated', server);
+            },
+        
+            getServer : function(){
+                return server;
+            },
 
             // Play the resource.
             play : function(json){

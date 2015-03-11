@@ -14,8 +14,6 @@ angular.module('app')
             
             // Register Callbacks.
             scope.player.on('timeupdate', function(data){
-//                $log.info("Time Update Received.");
-//                $log.info(scope.player.bufferedPercent()+ " end: " + angular.toJson(scope.player.buffered().end(0))) ;
                 $log.info(scope.player.currentTime());
                 
                 var playPos ={

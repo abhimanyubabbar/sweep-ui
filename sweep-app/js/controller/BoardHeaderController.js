@@ -16,7 +16,7 @@ angular.module('app')
 
     }])
 
-    .directive('fileUploader', ['$log', function ($log) {
+    .directive('fileUploader', ['$log','gvodService', function ($log,gvodService) {
 
         // Upload the file to the system.
         return{
@@ -29,10 +29,12 @@ angular.module('app')
                     var reader = new FileReader();
                     reader.onload = function (loadEvent) {
 
-                        var ymlJson = {
-                            yml: loadEvent.target.result
+                        var serverData = {
+                            info: loadEvent.target.result
                         };
-                        $log.info(JSON.parse(loadEvent.target.result));
+                        
+                        $log.info(JSON.parse(serverData.info));
+                        gvodService.setServer(JSON.parse(serverData.info));
                         
                         element.val("");
 
