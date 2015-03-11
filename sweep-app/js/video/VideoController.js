@@ -32,6 +32,13 @@ angular.module('app')
                 $log.info(scope.player.currentTime());
             });
             
+            
+            scope.$on('$destroy', function(){
+                if(scope.player != null){
+                    scope.player.dispose();
+                }
+            });
+            
             scope.linkForm = {
                 linkGenerated: 'none'
             }
