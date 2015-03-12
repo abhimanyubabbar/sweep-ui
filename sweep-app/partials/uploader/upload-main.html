@@ -5,24 +5,36 @@
             <div class="col-sm-4">
 
                 <div class="panel panel-info">
+                    
                     <div class="panel-heading">Waiting Upload</div>
                     <div class="panel-body">
-                        Basic panel example
+                        <ul id="fileset" class="list-unstyled">
+                            <li ng-repeat="file in files | waitingUpload">
+                                <label><input class="file" type="radio" name="fileSelected" ng-model="indexEntryData.fileName" value="{{file.name}}"  ng-checked= "file.isChecked"/> {{file.name}} </label>
+                            </li>
+                        </ul>
                     </div>
+                    
                 </div>
 
-                <div class="panel panel-warning">
-                    <div class="panel-heading">Processing</div>
-                    <div class="panel-body">
-                        Currently Processing
-                    </div>
-                </div>
+                <!--<div class="panel panel-warning">-->
+                    <!--<div class="panel-heading">Processing</div>-->
+                    <!--<div class="panel-body">-->
+                        <!--Currently Processing-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="panel panel-success">
+                    
                     <div class="panel-heading">Uploaded</div>
                     <div class="panel-body">
-                        Successfully Uploaded
+                        <ul class="list-unstyled">
+                            <li ng-repeat="file in files | uploaded">
+                                <label>{{file.name}}</label>
+                            </li>
+                        </ul>
                     </div>
+                    
                 </div>
 
             </div>
@@ -32,22 +44,17 @@
                 <form class="well">
 
                     <div class="form-group">
-
                         <label class="control-label" for="filename">FileName</label>
                         <input type="text" id="filename" class="form-control" placeholder="File Name ... ">
-
                     </div>
 
                     <div class="form-group">
-
                         <label class="control-label" for="category">Category</label>
-
                         <select class="form-control" id="category">
                             <option value="Video">Video</option>
                             <option value="Audio">Audio</option>
                             <option value="Books">Books</option>
                         </select>
-
                     </div>
 
                     <div class="form-group">
@@ -76,7 +83,6 @@
                             <br>
                             <li>IP : [ {{server.host}} ]</li>
                         </ul>
-
                     </div>
                 </div>
                 

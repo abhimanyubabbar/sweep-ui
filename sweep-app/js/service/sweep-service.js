@@ -5,7 +5,7 @@
 
 // === SWEEP WEBSERVICE === //
 
-angular.module('sweepMain')
+angular.module('app')
     .service('sweepService',['$log','$http',function($log,$http){
 
         
