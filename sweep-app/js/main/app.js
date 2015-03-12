@@ -22,12 +22,11 @@ angular.module('app', [
             {
                 templateUrl: 'partials/uploader/upload-landing.html',
                 controller: 'UploadController'
-                
             })
             .when('/upload-main',
             {
                 templateUrl: 'partials/uploader/upload-main.html',
-                controller: 'UploadController'
+                controller: 'EntryUploadController'
             })
             .when('/statistics',{
                 templateUrl: 'partials/statistics/basicScatterPlot.html',
