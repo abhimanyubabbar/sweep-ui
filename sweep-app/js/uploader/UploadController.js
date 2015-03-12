@@ -1,37 +1,19 @@
 'use strict';
 
 angular.module('app')
-    
-    .filter('waitingUpload',['$log', function($log){
-        
-        return function(data){
-            var filteredData = [];
-            
-            if(data != null){
-                for( var i =0 ; i < data.length; i++ ){
-                    
-                    if(data[i]["status"] === "NONE"){
-                        filteredData.push(data[i]);
-                    }
-                    
-                }
-            }
-            return filteredData;
-        }
-        
-    }])
 
-    .filter('uploaded',['$log', function($log){
+    .filter('waitingUpload', ['$log', function ($log) {
 
-        return function(data){
+        return function (data) {
             var filteredData = [];
 
-            if(data != null){
-                for( var i =0 ; i < data.length; i++ ){
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
 
-                    if(data[i]["status"] !== "NONE"){
+                    if (data[i]["status"] === "NONE") {
                         filteredData.push(data[i]);
                     }
+
                 }
             }
             return filteredData;
@@ -39,35 +21,53 @@ angular.module('app')
 
     }])
 
-    .controller('UploadController', ['$log','$scope','common','gvodService', function($log,$scope, common, gvodService){
+    .filter('uploaded', ['$log', function ($log) {
 
-        function _initScope(scope){
+        return function (data) {
+            var filteredData = [];
 
-            scope.routeTo = function(path){
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i]["status"] !== "NONE") {
+                        filteredData.push(data[i]);
+                    }
+                }
+            }
+            return filteredData;
+        }
+
+    }])
+
+    .controller('UploadController', ['$log', '$scope', 'common', 'gvodService', function ($log, $scope, common, gvodService) {
+
+        function _initScope(scope) {
+
+            scope.routeTo = function (path) {
                 common.routeTo(path);
             };
-            
+
         }
 
         _initScope($scope);
     }])
-    
-    .controller('EntryUploadController',['$log', '$scope','gvodService','sweepService',function($log,$scope,gvodService,sweepService){
 
-        
+    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService', function ($log, $scope, gvodService, sweepService) {
+
+
         // UTILITY FUNCTION.
-        function _reformatData(data){
+        function _reformatData(data) {
 
             var list = [];
             var isCheckSet = false;
 
-            for(var key in data){
+            for (var key in data) {
 
                 var obj = {};
                 obj["name"] = key;
                 obj["status"] = data[key];
 
-                if(!isCheckSet && obj["status"] === "NONE"){
+                if (!isCheckSet && obj["status"] === "NONE") {
                     // Set the checked flag.
                     obj["isChecked"] = true;
                     isCheckSet = true;
@@ -75,70 +75,110 @@ angular.module('app')
                     // Update the initial entry in the table.
                     $scope.indexEntryData["fileName"] = obj["name"];
                 }
-                else{
+                else {
                     obj["isChecked"] = false;
                 }
                 list.push(obj);
             }
             return list;
         }
-        
 
-        
-        function _initScope(scope){
+
+        function _initializeLibrary(){
+
+            gvodService.fetchFiles()
+
+                .success(function (data) {
+                    $log.info(data);
+                    $scope.files = _reformatData(data);
+                    $log.info($scope.files);
+                })
+                .error(function () {
+                    $log.info("Unable to fetch files.");
+                });
+        }
+
+        function _houseKeeping(data){
+
+            data.fileName = 'none';
+            data.url = undefined;
+            data.description = undefined;
+            _resetFormStatus();
+        }
+
+        function _resetFormStatus(){
+            $scope.entryAdditionForm.$setPristine();
+        }
+
+        function _initScope(scope) {
 
             // ==== INITIAL SETUP.
-            
+
             scope.server = gvodService.getServer();
-            scope.indexEntryData ={
+            scope.indexEntryData = {
 
                 fileName: 'none',
-                language:'English',
+                language: 'English',
                 fileSize: 1,
                 category: 'Video'
             };
 
-            gvodService.fetchFiles()
-            
-                .success(function(data){
-                    $log.info(data);
-                    scope.files = _reformatData(data);
-                    $log.info(scope.files); 
-                })
-                .error(function(data){
-                    $log.info("Unable to fetch files.");
-                });
-                
-            
-             // ==== EVENTS REGISTRATION.
-            scope.$on('server:updated', function(event,data){
+            _initializeLibrary();
+
+
+            // ==== EVENTS REGISTRATION.
+            scope.$on('server:updated', function (event, data) {
 
                 $log.info('server updated');
                 $log.info(data);
 
-                scope.$apply(function(){
+                scope.$apply(function () {
                     scope.server = gvodService.getServer();
+                    _initializeLibrary();
                 })
 
             });
         }
-        
-        
-        
-        $scope.submitIndexEntry = function(){
-            
-            var lastSubmitEntry = $scope.indexEntryData;
-            sweepService.addIndexEntry($scope.indexEntryData)
-                
-                .success(function(data){
-                    $log.info('Entry Successfully added in the system');
-                })
-                .error(function(data){
-                    $log.info('Addition of Index Entry Failed.');
-                })
+
+
+        $scope.submitIndexEntry = function () {
+
+            if(this.entryAdditionForm.$valid){
+
+                var lastSubmitEntry = $scope.indexEntryData;
+                //sweepService.addIndexEntry($scope.indexEntryData)
+                //
+                //    .success(function(data){
+                //        $log.info('Entry Successfully added in the system');
+                //    })
+                //    .error(function(data){
+                //        $log.info('Addition of Index Entry Failed.');
+                //    })
+
+                var uploadObj = {
+                    name: lastSubmitEntry.fileName,
+                    overlayId: parseInt(lastSubmitEntry.url)
+                };
+
+                gvodService.upload(uploadObj)
+
+                    .success(function (data) {
+
+                        $log.info("Entry successfully loaded");
+                        $log.info(data);
+
+                        _houseKeeping($scope.indexEntryData);
+                        _initializeLibrary();
+
+                    })
+
+                    .error(function (data) {
+                        $log.info("Entry Upload Aborted.");
+                    })
+            }
         };
-        
-        
-        _initScope($scope);
-        
-    }]);
+
+
+    _initScope($scope);
+
+}]);
