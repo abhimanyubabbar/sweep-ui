@@ -92,7 +92,7 @@ angular.module('app')
                     $log.info(data);
                     $scope.files = _reformatData(data);
                     $log.info($scope.files);
-                    AlertService.addAlert({type:'success', msg: 'Library Access Successfully.'});
+                    AlertService.addAlert({type:'success', msg: 'Library Refreshed.'});
                 })
                 .error(function () {
                     $log.info("Unable to fetch files.");
