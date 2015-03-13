@@ -37,6 +37,10 @@ angular.module('app', [
                 templateUrl: 'partials/video/video-js.html',
                 controller: 'VideoController'
             })
+            .when('/search',{
+                templateUrl: 'partials/search/search.html',
+                controller: 'SearchController'
+            })
             .otherwise({redirectTo: '/'})
     }])
     

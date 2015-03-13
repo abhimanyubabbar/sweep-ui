@@ -4,7 +4,7 @@
 
 
 
-angular.module('sweepMain')
+angular.module('app')
 
     .controller('SearchController',['$log','$scope','sweepService', function($log,$scope,sweepService){
         

@@ -9,8 +9,24 @@ angular.module('app')
             $log.info('Board Header Controller Initialized.');
             scope.routeTo = function (path) {
                 common.routeTo(path);
-            }
+            };
+            
+            scope.searchObj ={
+                searchTerm:  null
+            };
         }
+        
+        
+        $scope.search = function(searchTerm){
+          
+            if(this.searchForm.$valid){
+                
+                $log.info('search form valid');
+                common.routeTo('/search');
+                
+            }
+        };
+        
 
         _initScope($scope);
 
