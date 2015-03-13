@@ -22,7 +22,7 @@ angular.module('app')
             if(this.searchForm.$valid){
                 
                 $log.info('search form valid');
-                common.routeTo('/search');
+                common.routeTo('/search/'+ Math.random());
                 
             }
         };

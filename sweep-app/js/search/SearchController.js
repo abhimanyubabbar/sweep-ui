@@ -6,15 +6,27 @@
 
 angular.module('app')
 
-    .controller('SearchController',['$log','$scope','sweepService', function($log,$scope,sweepService){
+    .controller('SearchController',['$log','$scope', '$routeParams', 'sweepService', function($log, $scope, $routeParams, sweepService){
         
         function initScope(scope){
-            
-            scope.searchText = null;
-            scope.result = null;
-            
+
+            scope.search={};
+            scope.search.searchText = $routeParams.searchText;
+
+            // Initialize Resources.
+            // Initialize Video Resource.
+            _search(scope.search.searchText);
+
+
+            scope.$on('$destroy', function(){
+                $log.info('Destroy the video player instance.');
+            })
+
         }
 
+        function _search(data){
+            $log.info("Going to perform search for : " + data);
+        }
 
         /**
          * Based on the text perform search. The value should be 

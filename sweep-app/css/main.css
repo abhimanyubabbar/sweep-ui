@@ -51,3 +51,7 @@ div .search-image h1{
     right: 10px;
     z-index: 1000;
 }
+
+.medium-top-margin-buffer{
+    margin-top: 80px
+}

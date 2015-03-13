@@ -27,17 +27,11 @@ angular.module('app')
         
         
         return {
-            
+
             performSearch : function(searchJson){
                 
                 var _url = _defaultIp.concat('/').concat('search');
                 return _getPromiseObject(_defaultMethod,_url,_defaultHeader,searchJson);
-            },
-
-            addIndexEntry : function(indexEntryJson){
-                
-                var _url = _defaultIp.concat('/').concat('add');
-                return _getPromiseObject(_defaultMethod,_url,_defaultHeader, indexEntryJson);
             }
 
         }
