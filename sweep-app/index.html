@@ -13,6 +13,10 @@
 
 <body>
 
+<div class="notifications" ng-controller="AlertCtrl">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+</div>
+
 <div class="navbar navbar-default navbar-fixed-top" ng-controller="BoardHeaderController">
 
     <div class="container">
@@ -63,6 +67,8 @@
 <script src="https://rawgit.com/mbostock/d3/master/d3.min.js"></script>
 <script src="https://rawgit.com/novus/nvd3/v1.1.15-beta/nv.d3.min.js"></script>
 <script src="https://rawgit.com/krispo/angular-nvd3/master/dist/angular-nvd3.js"></script>
+<script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="js/main/app.js"></script>
 <script src="js/controller/BoardHeaderController.js"></script>
 <script src="js/controller/LandingController.js"></script>

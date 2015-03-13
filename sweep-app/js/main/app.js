@@ -2,7 +2,8 @@
 
 angular.module('app', [
     'ngRoute',
-    'nvd3'
+    'nvd3',
+    'ui.bootstrap'
     ])
     .config(['$routeProvider', function($routeProvider){
 
@@ -37,4 +38,46 @@ angular.module('app', [
                 controller: 'VideoController'
             })
             .otherwise({redirectTo: '/'})
+    }])
+    
+    .controller("AlertCtrl",['$log','$scope','$timeout','AlertService', function($log,$scope,$timeout,AlertService){
+
+        var _defaultTimeout = 3000;
+        $scope.alerts = [];
+
+        // Keep track of incoming alerts.
+        $scope.$watch(AlertService.getAlert,function(alert){
+
+            if(alert !== null){
+                var length = $scope.alerts.push(alert);
+
+                $timeout(function(){
+                    if($scope.alerts.length >0){
+                        $scope.alerts.splice(0,1);
+                    }
+                }, _defaultTimeout);
+            }
+
+        });
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+
+    }])
+    .service('AlertService',['$log',function($log){
+
+        var _currAlert = null;
+
+        return {
+
+            addAlert : function(alert){
+                _currAlert = alert;
+            },
+
+            getAlert : function(){
+                return _currAlert;
+            }
+        }
+
     }]);

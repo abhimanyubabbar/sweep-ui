@@ -52,7 +52,7 @@ angular.module('app')
         _initScope($scope);
     }])
 
-    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService', function ($log, $scope, gvodService, sweepService) {
+    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService','AlertService', function ($log, $scope, gvodService, sweepService, AlertService) {
 
 
         // UTILITY FUNCTION.
@@ -92,9 +92,11 @@ angular.module('app')
                     $log.info(data);
                     $scope.files = _reformatData(data);
                     $log.info($scope.files);
+                    AlertService.addAlert({type:'success', msg: 'Library Access Successfully.'});
                 })
                 .error(function () {
                     $log.info("Unable to fetch files.");
+                    AlertService.addAlert({type: 'warning', msg: 'Unable to Fetch the files.'});
                 });
         }
 
@@ -133,7 +135,10 @@ angular.module('app')
                 $log.info(data);
 
                 scope.$apply(function () {
+                    
                     scope.server = gvodService.getServer();
+                    AlertService.addAlert({type: 'success', msg: 'Server Details Updated.'});
+                    
                     _initializeLibrary();
                 })
 
@@ -166,7 +171,9 @@ angular.module('app')
 
                         $log.info("Entry successfully loaded");
                         $log.info(data);
-
+                        
+                        AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
+                        
                         _houseKeeping($scope.indexEntryData);
                         _initializeLibrary();
 

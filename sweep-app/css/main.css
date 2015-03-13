@@ -43,3 +43,11 @@ div .search-image h1{
 .specialFont{
     font-family: 'Lobster', cursive;
 }
+
+.notifications {
+    width: 300px;
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    z-index: 1000;
+}
