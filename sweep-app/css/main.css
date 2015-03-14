@@ -12,6 +12,21 @@ div .search-image{
     height: 500px;
 }
 
+div .network-image{
+    background-image: url(../image/to-infinity-and-beyond.jpg);
+    height: 500px;
+}
+
+div .infinity-image{
+    background-image: url(../image/to-infinity-and-beyond.jpg);
+    height: 350px;
+}
+
+div .availabilty-image{
+    background-image: url(../image/availability.jpg);
+    height: 500px;
+}
+
 
 div .statistics-image {
     background-image: url(../image/Statistics.jpg);
