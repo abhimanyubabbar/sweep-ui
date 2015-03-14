@@ -37,6 +37,9 @@ angular.module('app', [
                 templateUrl: 'partials/video/video-js.html',
                 controller: 'VideoController'
             })
+            .when('/about',{
+                templateUrl: 'partials/others/about-us.html'
+            })
             .when('/search/:searchText',{
                 templateUrl: 'partials/search/search.html',
                 controller: 'SearchController'
