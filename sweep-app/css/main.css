@@ -70,3 +70,7 @@ div .search-image h1{
 .medium-top-margin-buffer{
     margin-top: 80px
 }
+
+.video-wrapper{
+    height: 400px;
+}
