@@ -146,50 +146,58 @@ angular.module('app')
         }
 
 
+        function _scheduleGvodUpload(lastSubmitEntry){
+
+            var uploadObj = {
+                name: lastSubmitEntry.fileName,
+                overlayId: parseInt(lastSubmitEntry.url)
+            };
+
+            gvodService.pendingUpload(uploadObj)
+
+                .success(function () {
+
+                    $log.info('Pending Upload successful, now moving to upload');
+                    gvodService.upload(uploadObj)
+
+                        .success(function (data) {
+
+                            $log.info("Entry successfully loaded");
+                            $log.info(data);
+
+                            AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
+
+                            _houseKeeping($scope.indexEntryData);
+                            _initializeLibrary();
+
+                        })
+
+                        .error(function () {
+                            $log.error("Upload of Data to gvod service failed.");
+                        })
+                })
+
+                .error(function (data) {
+                    $log.warn("Pending Upload Failed." + data);
+                    AlertService.addAlert({type: 'warning', msg: "Pending Upload Failed."});
+                });
+        }
+
+
         $scope.submitIndexEntry = function () {
 
             if (this.entryAdditionForm.$valid) {
 
                 var lastSubmitEntry = $scope.indexEntryData;
-                //sweepService.addIndexEntry($scope.indexEntryData)
-                //
-                //    .success(function(data){
-                //        $log.info('Entry Successfully added in the system');
-                //    })
-                //    .error(function(data){
-                //        $log.info('Addition of Index Entry Failed.');
-                //    })
+                sweepService.addIndexEntry($scope.indexEntryData)
 
-                var uploadObj = {
-                    name: lastSubmitEntry.fileName,
-                    overlayId: parseInt(lastSubmitEntry.url)
-                };
-
-                gvodService.pendingUpload(uploadObj)
-
-                    .success(function () {
-
-                        $log.info('Pending Upload successful, now moving to upload');
-                        gvodService.upload(uploadObj)
-                            .success(function (data) {
-
-                                $log.info("Entry successfully loaded");
-                                $log.info(data);
-
-                                AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
-                                _houseKeeping($scope.indexEntryData);
-                                _initializeLibrary();
-
-                            })
-                            .error(function () {
-                                $log.error("Upload of Data to gvod service failed.");
-                            })
+                    .success(function(data){
+                        $log.info('Entry Successfully added in the system' + data);
+                        _scheduleGvodUpload(lastSubmitEntry);
                     })
-
-                    .error(function (data) {
-
-                        $log.warn("Pending Upload Failed.");
-                        AlertService.addAlert({type: 'warning', msg: "Pending Upload Failed."});
+                    .error(function(data){
+                        $log.info('Addition of Index Entry Failed.' + data);
+                        AlertService.addAlert({type: 'warning' , msg : 'Unable to upload entry to sweep.'});
                     });
             }
         };

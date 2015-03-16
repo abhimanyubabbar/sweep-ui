@@ -17,7 +17,7 @@ angular.module('app')
         
         
         function _getPromiseObject(method, url, headers, data){
-            $http({
+            return $http({
                 method: method,
                 url: url,
                 headers: headers,
@@ -32,6 +32,12 @@ angular.module('app')
                 
                 var _url = _defaultIp.concat('/').concat('search');
                 return _getPromiseObject(_defaultMethod,_url,_defaultHeader,searchJson);
+            },
+
+            addIndexEntry : function(entryData){
+                $log.info("Index Entry Initiated.");
+                var _url = _defaultIp.concat('/').concat('add');
+                return _getPromiseObject(_defaultMethod, _url, _defaultHeader, entryData);
             }
 
         }

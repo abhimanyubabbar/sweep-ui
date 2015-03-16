@@ -152,7 +152,7 @@ angular.module('app')
             // Initialize Resources.
             _search(scope.search.searchText);
 
-            scope.search.result = _getDummyResults();
+            //scope.search.result = _getDummyResults();
 
             // Initialize Player.
             _initializePlayer(scope.playerName);
@@ -185,30 +185,43 @@ angular.module('app')
                 overlayId: parseInt(data["url"])
             };
 
-            var test_json = {
-                name: 'demo.mp4',
-                overlayId: 12
-            };
+            //var test_json = {
+            //    name: 'demo.mp4',
+            //    overlayId: 12
+            //};
 
-            $log.info('Reconstructing play call with : ' + test_json);
+            $log.info('Reconstructing play call with : ' + json);
 
             _updateAndPlay($scope.player, $scope.currentVideoResource, angular.copy(test_json));
         };
 
 
-        function _search(data) {
+        /**
+         * Based on the search term provided,
+         * search the sweep for the matching files.
+         *
+         * @param searchTerm Term to search for.
+         * @private
+         */
+        function _search(searchTerm) {
 
-            $log.info("Going to perform search for : " + data);
-            //sweepService.performSearch(text)
-            //
-            //    .success(function (data) {
-            //        $log.info('Sweep Service -> Successful');
-            //        $scope.result = data;
-            //    })
-            //
-            //    .error(function (data) {
-            //        $log.info('Sweep Service -> Error');
-            //    })
+            $log.info("Going to perform search for : " + searchTerm);
+
+            var searchObj = {
+                fileNamePattern: searchTerm,
+                category: 'Video'
+            };
+
+            sweepService.performSearch(searchObj)
+
+                .success(function (data) {
+                    $log.info('Sweep Service -> Successful');
+                    $scope.search.result = data;
+                })
+
+                .error(function (data) {
+                    $log.info('Sweep Service -> Error' + data);
+                })
         }
 
         initScope($scope);
