@@ -52,7 +52,7 @@ angular.module('app')
         _initScope($scope);
     }])
 
-    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService','AlertService', function ($log, $scope, gvodService, sweepService, AlertService) {
+    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService', 'AlertService', function ($log, $scope, gvodService, sweepService, AlertService) {
 
 
         // UTILITY FUNCTION.
@@ -84,7 +84,7 @@ angular.module('app')
         }
 
 
-        function _initializeLibrary(){
+        function _initializeLibrary() {
 
             gvodService.fetchFiles()
 
@@ -92,7 +92,7 @@ angular.module('app')
                     $log.info(data);
                     $scope.files = _reformatData(data);
                     $log.info($scope.files);
-                    AlertService.addAlert({type:'success', msg: 'Library Refreshed.'});
+                    AlertService.addAlert({type: 'success', msg: 'Library Refreshed.'});
                 })
                 .error(function () {
                     $log.info("Unable to fetch files.");
@@ -100,7 +100,7 @@ angular.module('app')
                 });
         }
 
-        function _houseKeeping(data){
+        function _houseKeeping(data) {
 
             data.fileName = 'none';
             data.url = undefined;
@@ -108,7 +108,7 @@ angular.module('app')
             _resetFormStatus();
         }
 
-        function _resetFormStatus(){
+        function _resetFormStatus() {
             $scope.entryAdditionForm.$setPristine();
         }
 
@@ -135,10 +135,10 @@ angular.module('app')
                 $log.info(data);
 
                 scope.$apply(function () {
-                    
+
                     scope.server = gvodService.getServer();
                     AlertService.addAlert({type: 'success', msg: 'Server Details Updated.'});
-                    
+
                     _initializeLibrary();
                 })
 
@@ -146,46 +146,63 @@ angular.module('app')
         }
 
 
+        function _scheduleGvodUpload(lastSubmitEntry){
+
+            var uploadObj = {
+                name: lastSubmitEntry.fileName,
+                overlayId: parseInt(lastSubmitEntry.url)
+            };
+
+            gvodService.pendingUpload(uploadObj)
+
+                .success(function () {
+
+                    $log.info('Pending Upload successful, now moving to upload');
+                    gvodService.upload(uploadObj)
+
+                        .success(function (data) {
+
+                            $log.info("Entry successfully loaded");
+                            $log.info(data);
+
+                            AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
+
+                            _houseKeeping($scope.indexEntryData);
+                            _initializeLibrary();
+
+                        })
+
+                        .error(function () {
+                            $log.error("Upload of Data to gvod service failed.");
+                        })
+                })
+
+                .error(function (data) {
+                    $log.warn("Pending Upload Failed." + data);
+                    AlertService.addAlert({type: 'warning', msg: "Pending Upload Failed."});
+                });
+        }
+
+
         $scope.submitIndexEntry = function () {
 
-            if(this.entryAdditionForm.$valid){
+            if (this.entryAdditionForm.$valid) {
 
                 var lastSubmitEntry = $scope.indexEntryData;
-                //sweepService.addIndexEntry($scope.indexEntryData)
-                //
-                //    .success(function(data){
-                //        $log.info('Entry Successfully added in the system');
-                //    })
-                //    .error(function(data){
-                //        $log.info('Addition of Index Entry Failed.');
-                //    })
+                sweepService.addIndexEntry($scope.indexEntryData)
 
-                var uploadObj = {
-                    name: lastSubmitEntry.fileName,
-                    overlayId: parseInt(lastSubmitEntry.url)
-                };
-
-                gvodService.upload(uploadObj)
-
-                    .success(function (data) {
-
-                        $log.info("Entry successfully loaded");
-                        $log.info(data);
-                        
-                        AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
-                        
-                        _houseKeeping($scope.indexEntryData);
-                        _initializeLibrary();
-
+                    .success(function(data){
+                        $log.info('Entry Successfully added in the system' + data);
+                        _scheduleGvodUpload(lastSubmitEntry);
                     })
-
-                    .error(function (data) {
-                        $log.info("Entry Upload Aborted.");
-                    })
+                    .error(function(data){
+                        $log.info('Addition of Index Entry Failed.' + data);
+                        AlertService.addAlert({type: 'warning' , msg : 'Unable to upload entry to sweep.'});
+                    });
             }
         };
 
 
-    _initScope($scope);
+        _initScope($scope);
 
-}]);
+    }]);

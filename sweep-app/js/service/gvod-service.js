@@ -82,9 +82,9 @@ angular.module("app")
 
             pendingUpload : function(json){
 
-                var method = 'PUT';
+                var method ='PUT';
                 var url = _getUrl(_defaultPrefix,server,"pendinguploadvideo");
-
+                $log.info('Sending Pending Upload to: ' + url);
                 return _getPromiseObject(method, url, _defaultContentType, json);
 
             },
@@ -93,7 +93,7 @@ angular.module("app")
 
                 var method = 'PUT';
                 var url = _getUrl(_defaultPrefix,server,"uploadvideo");
-
+                $log.info('Sending Pending Upload to: ' + url);
                 return _getPromiseObject(method, url, _defaultContentType, json);
             },
 
