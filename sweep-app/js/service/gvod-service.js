@@ -111,6 +111,12 @@ angular.module("app")
                 var url = _getUrl(_defaultPrefix,server,"playPos");
                 
                 return _getPromiseObject(method, url, _defaultContentType,json);
+            },
+
+            removeVideo : function(json){
+                var method = 'PUT';
+                var url = _getUrl(_defaultPrefix, server, "removeVideo");
+                return _getPromiseObject(method, url, _defaultContentType, json);
             }
 
 

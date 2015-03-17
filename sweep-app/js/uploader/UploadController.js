@@ -102,7 +102,7 @@ angular.module('app')
 
         function _houseKeeping(data) {
 
-            data.fileName = 'none';
+            data.fileName = null;
             data.url = undefined;
             data.description = undefined;
             _resetFormStatus();
@@ -119,7 +119,7 @@ angular.module('app')
             scope.server = gvodService.getServer();
             scope.indexEntryData = {
 
-                fileName: 'none',
+                fileName:  null,
                 language: 'English',
                 fileSize: 1,
                 category: 'Video'
@@ -199,6 +199,19 @@ angular.module('app')
                         $log.info('Addition of Index Entry Failed.' + data);
                         AlertService.addAlert({type: 'warning' , msg : 'Unable to upload entry to sweep.'});
                     });
+            }
+        };
+
+
+        /**
+         * Remove Entry from the Library.
+         * @param entry
+         */
+        $scope.removeVideo = function(entry){
+
+            AlertService.addAlert({type: 'info', msg: 'Functionality under development.'});
+            if(entry != null && entry.fileName != null){
+                //gvodService.removeVideo({name: entry.fileName, overlayId: -1});
             }
         };
 
