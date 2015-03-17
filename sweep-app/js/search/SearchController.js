@@ -192,7 +192,7 @@ angular.module('app')
 
             $log.info('Reconstructing play call with : ' + json);
 
-            _updateAndPlay($scope.player, $scope.currentVideoResource, angular.copy(test_json));
+            _updateAndPlay($scope.player, $scope.currentVideoResource, angular.copy(json));
         };
 
 
