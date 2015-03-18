@@ -1,0 +1,24 @@
+<div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NodeId</th>
+                <th>Partition Id</th>
+                <th>Partition Depth</th>
+                <th>Entries</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="state in states">
+                <td>{{state.nodeId}}</td>
+                <td>{{state.partitionId}}</td>
+                <td>{{state.partitionDepth}}</td>
+                <td>{{state.numberOfEntries}}</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>

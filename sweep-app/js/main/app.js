@@ -30,7 +30,7 @@ angular.module('app', [
                 controller: 'EntryUploadController'
             })
             .when('/statistics',{
-                templateUrl: 'partials/statistics/basicScatterPlot.html',
+                templateUrl: 'partials/statistics/statistics.html',
                 controller: 'StatisticsController'
             })
             .when('/video',{
