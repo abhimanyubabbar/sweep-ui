@@ -28,6 +28,7 @@ angular.module('app').
                                     })
                                     .error(function(data){
                                         $log.info('Unable to fetch the state information ')
+                                        scp.states = null;
                                     })
                             }, 5000);
 
