@@ -52,7 +52,7 @@ angular.module('app')
         _initScope($scope);
     }])
 
-    .controller('EntryUploadController', ['$log', '$scope', 'gvodService', 'sweepService', 'AlertService', function ($log, $scope, gvodService, sweepService, AlertService) {
+    .controller('EntryUploadController', ['$log', '$scope','$q', 'gvodService', 'sweepService', 'AlertService', function ($log, $scope,$q, gvodService, sweepService, AlertService) {
 
 
         // UTILITY FUNCTION.
@@ -145,63 +145,61 @@ angular.module('app')
             });
         }
 
-
-        function _scheduleGvodUpload(lastSubmitEntry){
-
-            var uploadObj = {
-                name: lastSubmitEntry.fileName,
-                overlayId: parseInt(lastSubmitEntry.url)
-            };
-
-            gvodService.pendingUpload(uploadObj)
-
-                .success(function () {
-
-                    $log.info('Pending Upload successful, now moving to upload');
-                    gvodService.upload(uploadObj)
-
-                        .success(function (data) {
-
-                            $log.info("Entry successfully loaded");
-                            $log.info(data);
-
-                            AlertService.addAlert({type: 'success', msg: 'Upload Successful'});
-
-                            _houseKeeping($scope.indexEntryData);
-                            _initializeLibrary();
-
-                        })
-
-                        .error(function () {
-                            $log.error("Upload of Data to gvod service failed.");
-                        })
-                })
-
-                .error(function (data) {
-                    $log.warn("Pending Upload Failed." + data);
-                    AlertService.addAlert({type: 'warning', msg: "Pending Upload Failed."});
-                });
-        }
-
-
-        $scope.submitIndexEntry = function () {
+        
+        
+        $scope.submitIndexEntry = function() {
 
             if (this.entryAdditionForm.$valid) {
 
                 var lastSubmitEntry = $scope.indexEntryData;
+                var uploadObj = { name: lastSubmitEntry.fileName, overlayId: parseInt(lastSubmitEntry.url) };
+
                 sweepService.addIndexEntry($scope.indexEntryData)
 
-                    .success(function(data){
-                        $log.info('Entry Successfully added in the system' + data);
-                        _scheduleGvodUpload(lastSubmitEntry);
+                    // Add Index entry successful.
+                    .then(function (data) {
+
+                        $log.info("Entry Addition successful in the system: " + data);
+                        return gvodService.pendingUpload(uploadObj);
+                    },
+                    function (error) {
+                        return $q.reject(error);
                     })
-                    .error(function(data){
-                        $log.info('Addition of Index Entry Failed.' + data);
-                        AlertService.addAlert({type: 'warning' , msg : 'Unable to upload entry to sweep.'});
-                    });
+
+                    // Pending Upload Result Handling.
+                    .then(function (success) {
+
+                        $log.info("Got the pending upload success");
+                        return gvodService.upload(uploadObj);
+
+                    },
+                    function (error) {
+                        $log.info("Error pending upload: " + error);
+                        return $q.reject(error);
+                    })
+
+                    // Gvod Upload Result Handling.
+                    .then(function (success) {
+
+                        $log.info("Index Upload Successful");
+
+                        _houseKeeping($scope.indexEntryData);
+                        _initializeLibrary();
+
+                        AlertService.addAlert({type: 'success', msg: 'Upload Successful.'});
+                    },
+                    function (error) {
+                        $log.info("Upload Result: " + error);
+                        return $q.reject(error);
+                    })
+
+                    // Exception Handling.
+                    .then(null, function (error) {
+                        AlertService.addAlert({type: 'warning', msg: error});
+                    })
             }
         };
-
+        
 
         /**
          * Remove Entry from the Library.

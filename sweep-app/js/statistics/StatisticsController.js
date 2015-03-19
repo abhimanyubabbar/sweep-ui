@@ -3,7 +3,7 @@ angular.module('app').
 
     }])
 
-    .directive('rinnegan', ['$log', '$interval','AlertService', 'aggregatorService', function ($log, $interval, AlertService, aggregatorService) {
+    .directive('rinnegan', ['$log', '$interval', '$q', 'AlertService', 'aggregatorService', function ($log, $interval, $q, AlertService, aggregatorService) {
 
         return {
 
@@ -12,34 +12,42 @@ angular.module('app').
 
             controller: function ($scope) {
 
+                function startIntervalTask(timeout) {
+
+                    $scope.interval = $interval(function () {
+
+                        $log.info("Executing the scheduled rest call. ");
+                        aggregatorService.getSystemsView()
+                            .success(function (data) {
+                                $scope.states = data;
+                            })
+                            .error(function (data) {
+                                $log.info('Unable to fetch the state information ')
+                                $scope.states = null;
+                            })
+                    }, timeout);
+                }
+
+
                 function initScope(scp) {
 
+                    // Chaining Promises.
                     aggregatorService.handshake()
 
-                        .success(function(){
+                        .then(function (success) {
 
-                            AlertService.addAlert({type: 'success', msg: 'Server handshake complete.'})
-                            scp.interval = $interval(function () {
-                                $log.info("Executing the scheduled rest call. ");
+                            AlertService.addAlert({type: 'success', msg: 'Server handshake successful'});
+                            startIntervalTask(5000);
 
-                                aggregatorService.getSystemsView()
-                                    .success(function (data) {
-                                        scp.states = data;
-                                    })
-                                    .error(function(data){
-                                        $log.info('Unable to fetch the state information ')
-                                        scp.states = null;
-                                    })
-                            }, 5000);
+                        }, function (error) {
 
+                            $log.warn(error);
+                            return $q.reject('Server Handshake Failed.');
                         })
 
-                        .error(function(){
-                            AlertService.addAlert({type: 'warning', msg: 'Unable to locate the aggregator server.'})
+                        .then(null, function (error) {
+                            AlertService.addAlert({type: 'warning', msg: error});
                         });
-
-
-
 
 
                     scp.$on('$destroy', function () {
