@@ -7,15 +7,17 @@
                 <th>Partition Id</th>
                 <th>Partition Depth</th>
                 <th>Entries</th>
+                <th>isLeader</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="state in states">
+            <tr ng-repeat="state in states" ng-class= "state.leader == true ? 'success' : 'default'">
                 <td>{{state.nodeId}}</td>
                 <td>{{state.partitionId}}</td>
                 <td>{{state.partitionDepth}}</td>
                 <td>{{state.numberOfEntries}}</td>
+                <td>{{state.leader}}</td>
             </tr>
         </tbody>
 

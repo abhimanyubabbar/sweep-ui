@@ -17,7 +17,7 @@ angular.module('app').
                     $scope.interval = $interval(function () {
 
                         $log.info("Executing the scheduled rest call. ");
-                        aggregatorService.getSystemsView()
+                        aggregatorService.getSimpleModelView()
                             .success(function (data) {
                                 $scope.states = data;
                             })

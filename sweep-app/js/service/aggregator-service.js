@@ -24,8 +24,8 @@ angular.module('app')
 
         return {
 
-            getSystemsView : function(){
-                var url = _defaultIp.concat("/systemstate");
+            getSimpleModelView : function(){
+                var url = _defaultIp.concat("/systemsimplemodel");
                 return _getPromiseObject('GET', url, _defaultHeader);
             },
 
